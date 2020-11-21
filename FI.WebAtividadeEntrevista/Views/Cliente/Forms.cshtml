@@ -1,18 +1,23 @@
-﻿
-<form id="formCadastro" method="post">
+﻿<form id="formCadastro" method="post">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="Nome">Nome:</label>
                 <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Sobrenome">Sobrenome:</label>
+                <input required="required" type="text" class="form-control" id="Sobrenome" name="Sobrenome" placeholder="Ex.: da Silva" maxlength="255">
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="Sobrenome">Sobrenome:</label>
-                <input required="required" type="text" class="form-control" id="Sobrenome" name="Sobrenome" placeholder="Ex.: da Silva" maxlength="255">
+                <label for="CPF">CPF:</label>
+                <input required="required" type="text" class="form-control cpf validate" id="CPF" name="CPF" placeholder="Ex.: 000.191.000-00" maxlength="16">
             </div>
         </div>
         <div class="col-md-6">
@@ -27,7 +32,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="CEP">CEP:</label>
-                <input required="required" type="text" class="form-control" id="CEP" name="CEP" placeholder="Ex.: 01011-100" maxlength="9">
+                <input required="required" type="text" class="form-control cep" id="CEP" name="CEP" placeholder="Ex.: 01011-100" maxlength="9">
             </div>
         </div>
         <div class="col-md-4">
@@ -67,7 +72,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="Telefone">Telefone:</label>
-                <input required="required" type="tel" class="form-control" id="Telefone" name="Telefone" placeholder="Ex.: (11) 2020-3030" maxlength="15">
+                <input required="required" type="tel" class="form-control phone" id="Telefone" name="Telefone" placeholder="Ex.: (11) 2020-3030" maxlength="15">
             </div>
         </div>
     </div>
@@ -83,3 +88,5 @@
 
 
 </form>
+
+

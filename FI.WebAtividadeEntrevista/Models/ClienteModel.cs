@@ -25,6 +25,10 @@ namespace WebAtividadeEntrevista.Models
         [Required]
         public string Cidade { get; set; }
 
+        [Required(ErrorMessage = "CPF obrigatório")]
+        [CPFCustomValidation(ErrorMessage = "CPF inválido")]
+        public string CPF { get; set; }
+
         /// <summary>
         /// E-mail
         /// </summary>

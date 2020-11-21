@@ -25,6 +25,9 @@ namespace WebAtividadeEntrevista
             bundles.Add(new ScriptBundle("~/bundles/jtable").Include(
                       "~/Scripts/jtable/jquery.jtable.min.js",
                       "~/Scripts/jtable/localization/jquery.jtable.pt-BR.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/jquery.mask").Include("~/Scripts/jquery.mask.js"));
+            
 
             bundles.Add(new ScriptBundle("~/bundles/clientes").Include(
                       "~/Scripts/Clientes/FI.Clientes.js"));
@@ -32,6 +35,9 @@ namespace WebAtividadeEntrevista
                       "~/Scripts/Clientes/FI.ListClientes.js"));
             bundles.Add(new ScriptBundle("~/bundles/altClientes").Include(
                       "~/Scripts/Clientes/FI.AltClientes.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/maskValidationClientes").Include(
+                    "~/Scripts/Clientes/FI.MaskValidationClientes.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

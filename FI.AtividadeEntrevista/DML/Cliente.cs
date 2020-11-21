@@ -20,6 +20,11 @@ namespace FI.AtividadeEntrevista.DML
         /// CEP
         /// </summary>
         public string CEP { get; set; }
+        
+        /// <summary>
+        /// ALGUNS COMENTARIOS SAO OVER
+        /// </summary>
+        public string CPF { get; set; }
 
         /// <summary>
         /// Cidade

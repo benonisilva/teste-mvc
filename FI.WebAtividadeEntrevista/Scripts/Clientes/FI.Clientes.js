@@ -7,14 +7,15 @@ $(document).ready(function () {
             method: "POST",
             data: {
                 "NOME": $(this).find("#Nome").val(),
-                "CEP": $(this).find("#CEP").val(),
+                "CPF": unmask($(this).find("#CPF").val()),
+                "CEP": unmask($(this).find("#CEP").val()),
                 "Email": $(this).find("#Email").val(),
                 "Sobrenome": $(this).find("#Sobrenome").val(),
                 "Nacionalidade": $(this).find("#Nacionalidade").val(),
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()
+                "Telefone": unmask($(this).find("#Telefone").val())
             },
             error:
             function (r) {

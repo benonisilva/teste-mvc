@@ -26,13 +26,11 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Incluir(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
-            
-            if (!this.ModelState.IsValid)
-            {
-                List<string> erros = (from item in ModelState.Values
-                                      from error in item.Errors
-                                      select error.ErrorMessage).ToList();
 
+            List<string> erros = this.errorsWhenInclusionNewClient(model.CPF);
+
+            if (erros.Count > 0)
+            {
                 Response.StatusCode = 400;
                 return Json(string.Join(Environment.NewLine, erros));
             }
@@ -42,6 +40,7 @@ namespace WebAtividadeEntrevista.Controllers
                 model.Id = bo.Incluir(new Cliente()
                 {                    
                     CEP = model.CEP,
+                    CPF = model.CPF,
                     Cidade = model.Cidade,
                     Email = model.Email,
                     Estado = model.Estado,
@@ -145,6 +144,25 @@ namespace WebAtividadeEntrevista.Controllers
             {
                 return Json(new { Result = "ERROR", Message = ex.Message });
             }
+        }
+
+        private List<string> errorsWhenInclusionNewClient(string cpf)
+        {
+            List<string> erros = new List<string>();
+            if (!this.ModelState.IsValid)
+            {
+                erros = (from item in ModelState.Values
+                                      from error in item.Errors
+                                      select error.ErrorMessage).ToList();
+            } else
+            {
+                var existCpfOnDb = new BoCliente().VerificarExistencia(cpf);
+                if (existCpfOnDb)
+                {
+                    erros.Add("Cpf já existe");
+                }
+            }
+            return erros;
         }
     }
 }
