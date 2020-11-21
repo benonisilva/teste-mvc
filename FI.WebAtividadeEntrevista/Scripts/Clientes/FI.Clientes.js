@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-    $('#formCadastro').submit(function (e) {
+    $('#formCadastro').on("submit", function (e) {
         e.preventDefault();
         $.ajax({
             url: urlPost,

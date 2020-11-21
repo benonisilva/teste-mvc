@@ -12,10 +12,19 @@ namespace FI.AtividadeEntrevista.BLL
         /// Inclui um novo cliente
         /// </summary>
         /// <param name="cliente">Objeto de cliente</param>
-        public long Incluir(DML.Cliente cliente)
+        public long Incluir(DML.Cliente cliente, List<DML.Beneficiario> beneficiarios)
         {
             DAL.DaoCliente cli = new DAL.DaoCliente();
-            return cli.Incluir(cliente);
+            long idCliente = cli.Incluir(cliente);
+            if (beneficiarios != null)
+            {
+                foreach (var item in beneficiarios)
+                {
+                    item.IdCliente = idCliente;
+                    cli.IncluirNovoBeneficiario(item);
+                }
+            }
+            return idCliente;
         }
 
         /// <summary>
@@ -77,6 +86,13 @@ namespace FI.AtividadeEntrevista.BLL
         {
             DAL.DaoCliente cli = new DAL.DaoCliente();
             return cli.VerificarExistencia(CPF);
+        }
+
+        public List<DML.Beneficiario> PesquisaBeneficiariosByClienteId(long id)
+        {
+            List<DML.Beneficiario> retVal = new List<DML.Beneficiario>();
+            retVal.Add(new DML.Beneficiario { CPF = "12312", Id = 1, IdCliente = 1, Nome = "dsdas" });
+            return retVal;
         }
     }
 }

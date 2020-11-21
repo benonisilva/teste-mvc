@@ -1,8 +1,9 @@
 ﻿
 $(document).ready(function () {
     if (obj) {
+        console.warn(obj);
         $('#formCadastro #Nome').val(obj.Nome);
-        $('#formCadastro #CEP').val(obj.CPF);
+        $('#formCadastro #CPF').val(obj.CPF);
         $('#formCadastro #CEP').val(obj.CEP);
         $('#formCadastro #Email').val(obj.Email);
         $('#formCadastro #Sobrenome').val(obj.Sobrenome);

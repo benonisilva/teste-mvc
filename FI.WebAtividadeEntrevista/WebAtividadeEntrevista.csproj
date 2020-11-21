@@ -189,6 +189,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BeneficiarioModel.cs" />
     <Compile Include="Models\ClienteModel.cs" />
     <Compile Include="Models\CPFCustomValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -269,6 +270,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\Clientes\FI.Beneficiarios.js" />
     <Content Include="Scripts\Clientes\FI.MaskValidationClientes.js" />
     <Content Include="Scripts\Clientes\FI.AltClientes.js" />
     <Content Include="Scripts\Clientes\FI.ListClientes.js" />
@@ -435,6 +437,7 @@
     <Content Include="Scripts\jtable\themes\basic\jtable_basic.less" />
     <Content Include="Views\Cliente\Alterar.cshtml" />
     <Content Include="Views\Cliente\Forms.cshtml" />
+    <Content Include="Views\Cliente\Beneficiarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FI.AtividadeEntrevista\FI.AtividadeEntrevista.csproj">

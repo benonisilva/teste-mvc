@@ -64,6 +64,7 @@
     <Compile Include="BLL\BoCliente.cs" />
     <Compile Include="DAL\Clientes\DaoCliente.cs" />
     <Compile Include="DAL\Padrao\FI.AcessoDados.cs" />
+    <Compile Include="DML\Beneficiario.cs" />
     <Compile Include="DML\Cliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DAL\Clientes\AlterTable\AddCPFColumn.sql" />
+    <EmbeddedResource Include="DAL\Clientes\Procedures\FI_SP_IncBeneficiario.sql" />
+    <Content Include="DAL\Clientes\Table\BENEFICIARIOS.sql" />
+    <EmbeddedResource Include="DAL\Clientes\Procedures\FI_SP_IncClienteV2.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
