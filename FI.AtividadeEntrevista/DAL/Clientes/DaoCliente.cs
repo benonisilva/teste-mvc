@@ -119,6 +119,21 @@ namespace FI.AtividadeEntrevista.DAL
         }
 
         /// <summary>
+        /// Lista todos os clientes
+        /// </summary>
+        internal List<DML.Beneficiario> ListarBeneficiariosByIdCliente(long idCliente)
+        {
+            List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
+
+            parametros.Add(new System.Data.SqlClient.SqlParameter("IdCliente", idCliente));
+
+            DataSet ds = base.Consultar("FI_SP_ConsBeneficiario", parametros);
+            List<DML.Beneficiario> cli = ConverterBefeniciario(ds);
+
+            return cli;
+        }
+
+        /// <summary>
         /// Inclui um novo cliente
         /// </summary>
         /// <param name="cliente">Objeto de cliente</param>
@@ -155,6 +170,17 @@ namespace FI.AtividadeEntrevista.DAL
             base.Executar("FI_SP_DelCliente", parametros);
         }
 
+        internal void ExcluirBeneficiario(long Id)
+        {
+            List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
+
+            parametros.Add(new System.Data.SqlClient.SqlParameter("Id", Id));
+
+            base.Executar("FI_SP_DelBeneficiario", parametros);
+        }
+
+        
+
         private List<DML.Cliente> Converter(DataSet ds)
         {
             List<DML.Cliente> lista = new List<DML.Cliente>();
@@ -174,6 +200,25 @@ namespace FI.AtividadeEntrevista.DAL
                     cli.Nome = row.Field<string>("Nome");
                     cli.Sobrenome = row.Field<string>("Sobrenome");
                     cli.Telefone = row.Field<string>("Telefone");
+                    lista.Add(cli);
+                }
+            }
+
+            return lista;
+        }
+
+        private List<DML.Beneficiario> ConverterBefeniciario(DataSet ds)
+        {
+            List<DML.Beneficiario> lista = new List<DML.Beneficiario>();
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    DML.Beneficiario cli = new DML.Beneficiario();
+                    cli.Id = row.Field<long>("Id");
+                    cli.CPF = row.Field<string>("CPF");
+                    cli.Nome = row.Field<string>("Nome");
+                    cli.IdCliente = row.Field<long>("IdCliente");
                     lista.Add(cli);
                 }
             }

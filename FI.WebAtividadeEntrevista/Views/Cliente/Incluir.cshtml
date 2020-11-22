@@ -11,6 +11,9 @@
             });
         });
         var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
+        var urlBeneficiariosList = '/Cliente/BeneficiariosTemp';
+        var urlExlusaoBeneficiario = '/Cliente/RemoverBeneficiarioTemp?id=';
+        var urlIncluirNovoBeneficiario = '/Cliente/IncluirBeneficiarioTemp'; 
     </script>
     @Scripts.Render("~/bundles/jquery.mask")
     @Scripts.Render("~/bundles/maskValidationClientes")
@@ -20,48 +23,3 @@
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 @Html.Partial("Forms")
-
-<div id="modalBeneficiario" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title">Beneficiarios</h4>
-            </div>
-            <div class="modal-body">
-                <form id="formBeneficiario" method="post">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="NomeBeneficiario">Nome:</label>
-                                <input required="required" type="text" class="form-control" id="NomeBeneficiario" name="NomeBeneficiario" placeholder="Ex.: João" maxlength="50">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="CPFBeneficiario">CPF:</label>
-                                <input required="required" type="text" class="form-control cpf validate" id="CPFBeneficiario" name="CPFBeneficiario" placeholder="Ex.: 000.191.000-00" maxlength="16">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group" style="margin-top: 24px;">
-                                <input type="button" value="Inserir" id="btnInserirBeneficiario" class="btn btn-success" />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table" id="gridBeneficiarios">
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -78,6 +78,8 @@
   <ItemGroup>
     <Content Include="DAL\Clientes\AlterTable\AddCPFColumn.sql" />
     <EmbeddedResource Include="DAL\Clientes\Procedures\FI_SP_IncBeneficiario.sql" />
+    <EmbeddedResource Include="DAL\Clientes\Procedures\FI_SP_ConsBeneficiario.sql" />
+    <EmbeddedResource Include="DAL\Clientes\Procedures\FI_SP_DelBeneficario.sql" />
     <Content Include="DAL\Clientes\Table\BENEFICIARIOS.sql" />
     <EmbeddedResource Include="DAL\Clientes\Procedures\FI_SP_IncClienteV2.sql" />
   </ItemGroup>

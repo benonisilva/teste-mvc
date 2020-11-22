@@ -4,13 +4,24 @@
 }
 @section scripts{
     <script>
+        $(function () {
+            $(".modal-beneficiarios").on("click", function (e) {
+                e.preventDefault();
+                $("#modalBeneficiario").modal();
+            });
+        });
         var urlPost = '@Url.Action("Alterar", "Cliente", new { area = "" })';
         var obj = @Html.Raw(Json.Encode(Model));
         var urlRetorno = '@Url.Action("Index", "Cliente", new { area = "" })';
+        var urlBeneficiariosList = '/Cliente/Beneficiarios?id=' + obj.Id;
+        var urlExlusaoBeneficiario = '/Cliente/RemoverBeneficiario?id=';
+        var urlIncluirNovoBeneficiario = '/Cliente/IncluirBeneficiario?idCliente=' + obj.Id; 
+
     </script>
     @Scripts.Render("~/bundles/altClientes")
     @Scripts.Render("~/bundles/jquery.mask")
     @Scripts.Render("~/bundles/maskValidationClientes")
+    @Scripts.Render("~/bundles/beneficiarios")
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 @Html.Partial("Forms")

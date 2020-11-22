@@ -100,7 +100,12 @@ namespace WebAtividadeEntrevista.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<string> erros = this.errorsWhenInclusionNewClient(beneficiarioModel.CPFBeneficiario);
+            if (Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] == null)
+            {
+                Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] = new List<BeneficiarioModel>();
+            }
+            List<BeneficiarioModel> beneficiarios = Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] as List<BeneficiarioModel>;
+            List<string> erros = this.errorsWhenInclusionNewBeneficiario(beneficiarioModel.CPFBeneficiario, beneficiarios);
 
             if (erros.Count > 0)
             {
@@ -108,25 +113,45 @@ namespace WebAtividadeEntrevista.Controllers
                 return Json(string.Join(Environment.NewLine, erros));
             } else
             {
-                if (Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] == null )
-                {
-                    Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] = new List<BeneficiarioModel>();
-                }
-                List<BeneficiarioModel> beneficiarios = Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] as List<BeneficiarioModel>;
+
                 beneficiarios.Add(beneficiarioModel);
                 return Json(beneficiarioModel);
             }
         }
 
-        public ActionResult Beneficiarios(int? id)
+        private List<string> errorsWhenInclusionNewBeneficiario(string cPFBeneficiario, List<BeneficiarioModel> beneficiarios)
+        {
+            List<string> erros = new List<string>();
+            if (!this.ModelState.IsValid)
+            {
+                erros = (from item in ModelState.Values
+                         from error in item.Errors
+                         select error.ErrorMessage).ToList();
+            }
+            else
+            {
+                if (cPFBeneficiario != null && beneficiarios.Count > 0 && beneficiarios.Any(b => cPFBeneficiario.Equals(b.CPFBeneficiario)))
+                {
+                    erros.Add("Cpf já existe");
+                }
+            }
+            return erros;
+
+
+        }
+
+
+        [HttpPost]
+        public JsonResult Beneficiarios(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Response.StatusCode = 400;
             }
             BoCliente bo = new BoCliente();
             List<Beneficiario> beneficiarios = bo.PesquisaBeneficiariosByClienteId(id.Value);
-            return View(mapToBeneficiarioModel(beneficiarios));
+            List<BeneficiarioModel> retVal = mapToBeneficiarioModel(beneficiarios);
+            return Json(new { Result = "OK", Records = retVal, TotalRecordCount = retVal.Count });
         }
 
         public JsonResult BeneficiariosTemp()
@@ -136,6 +161,59 @@ namespace WebAtividadeEntrevista.Controllers
                 Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] = new List<BeneficiarioModel>();
             }
             List<BeneficiarioModel> beneficiarios = Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] as List<BeneficiarioModel>;
+            return Json(new { Result = "OK", Records = beneficiarios, TotalRecordCount = beneficiarios.Count });
+        }
+        
+        [HttpPost]
+        public JsonResult IncluirBeneficiario(long? idCliente, BeneficiarioModel beneficiarioModel)
+        {
+            if (idCliente == null)
+            {
+                Response.StatusCode = 400;
+            }
+
+            List<string> erros = this.errorNewBeneficiario(beneficiarioModel.CPFBeneficiario);
+
+            if (erros.Count > 0)
+            {
+                Response.StatusCode = 400;
+                return Json(string.Join(Environment.NewLine, erros));
+            }
+            BoCliente bo = new BoCliente();
+            Beneficiario beneficiario = new Beneficiario { 
+                CPF = beneficiarioModel.CPFBeneficiario,
+                Nome = beneficiarioModel.NomeBeneficiario,
+                IdCliente = idCliente.Value
+            };
+            long id = bo.IncluirNovoBeneficiario(beneficiario);
+            beneficiario.Id = id;
+            return Json(beneficiarioModel);
+        }
+
+        [HttpPost]
+        public JsonResult RemoverBeneficiario(int? id)
+        {
+            if (id == null)
+            {
+                Response.StatusCode = 400;
+            }
+            BoCliente bo = new BoCliente();
+            bo.ExcluirBeneficiario(id.Value);
+            return Json(new { Result = "OK"  });
+        }
+
+        [HttpPost]
+        public JsonResult RemoverBeneficiarioTemp(int id)
+        {
+            if (Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] == null)
+            {
+                Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] = new List<BeneficiarioModel>();
+            }
+            List<BeneficiarioModel> beneficiarios = Session[KEY_TEMP_DATA_LISTA_BENEFICIARIOS] as List<BeneficiarioModel>;
+           if (beneficiarios.Count -1 >= id)
+            {
+                beneficiarios.RemoveAt(id);
+            }
             return Json(beneficiarios);
         }
 
@@ -245,6 +323,27 @@ namespace WebAtividadeEntrevista.Controllers
                     erros.Add("Cpf já existe");
                 }
             }
+            return erros;
+        }
+
+        private List<String> errorNewBeneficiario(string cpfBenecifiao)
+        {
+            List<string> erros = new List<string>();
+            if (!this.ModelState.IsValid)
+            {
+                erros = (from item in ModelState.Values
+                         from error in item.Errors
+                         select error.ErrorMessage).ToList();
+            }
+            else
+            {
+                var existCpfOnDb = new BoCliente().VerificarExistenciaBeneficiario(cpfBenecifiao);
+                if (existCpfOnDb)
+                {
+                    erros.Add("Cpf já existe");
+                }
+            }
+
             return erros;
         }
     }

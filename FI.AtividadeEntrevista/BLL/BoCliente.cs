@@ -59,6 +59,12 @@ namespace FI.AtividadeEntrevista.BLL
             cli.Excluir(id);
         }
 
+        public void ExcluirBeneficiario(long id)
+        {
+            DAL.DaoCliente cli = new DAL.DaoCliente();
+            cli.ExcluirBeneficiario(id);
+        }
+
         /// <summary>
         /// Lista os clientes
         /// </summary>
@@ -91,8 +97,21 @@ namespace FI.AtividadeEntrevista.BLL
         public List<DML.Beneficiario> PesquisaBeneficiariosByClienteId(long id)
         {
             List<DML.Beneficiario> retVal = new List<DML.Beneficiario>();
-            retVal.Add(new DML.Beneficiario { CPF = "12312", Id = 1, IdCliente = 1, Nome = "dsdas" });
+            DAL.DaoCliente cli = new DAL.DaoCliente();
+            retVal = cli.ListarBeneficiariosByIdCliente(id);
             return retVal;
+        }
+
+        public long IncluirNovoBeneficiario(DML.Beneficiario beneficiario)
+        {
+            DAL.DaoCliente cli = new DAL.DaoCliente();
+            return cli.IncluirNovoBeneficiario(beneficiario);
+        }
+
+        public bool VerificarExistenciaBeneficiario(string cpfBenecifiao)
+        {
+            // TODO 
+            return false;
         }
     }
 }
